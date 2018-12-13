@@ -43,46 +43,105 @@ export default class HelloWorldSceneAR extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.state.image === 1 ?
-      this.setState({
-        image: 2
-      }) :
-      this.setState({
-        image: 1
-      }, 1500)
-    })
+    alert(this.props.arSceneNavigator.viroAppProps.imageNumber)
   }
 
-  onPressLearnMore = () => {
-
-  }
 
   takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
 
   render() {
+    const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >
-        {
-          this.state.image === 1 ?
+          {/* <ViroImage
+            scale={[.147, .2079, 0]}
+            position={[0, 0.0001, 0]}
+            rotation={[-90, -90, 0]}
+            source={require("./res/cat/reailstic/2.png")}
+          /> */}
+          {
+            imageNumber === 1 ?
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/1.png")}
+            /> :
+            imageNumber === 2 ?
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/2.png")}
+            /> :
+            imageNumber === 3 ? 
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/3.png")}
+            /> :
+            imageNumber === 4 ? 
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/4.png")}
+            /> :
+            imageNumber === 5 ? 
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/5.png")}
+            /> :
+            imageNumber === 6 ? 
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/6.png")}
+            /> :
+            imageNumber === 7 ? 
+            <ViroImage
+              scale={[.147, .2079, 0]}
+              position={[0, 0.0001, 0]}
+              rotation={[-90, -90, 0]}
+              source={require("./res/cat/reailstic/7.png")}
+            /> :
+            null
+          }
+        {/* {!imageNumber === 1 ? (
           <ViroImage
             scale={[.147, .2079, 0]}
             position={[0, 0.0001, 0]}
             rotation={[-90, -90, 0]}
             source={require("./res/cat/reailstic/1.png")}
-            // source={require(this.state.imageTrace)}
+          />
+        ):(
+          <ViroImage
+            scale={[.147, .2079, 0]}
+            position={[0, 0.0001, 0]}
+            rotation={[-90, -90, 0]}
+            source={require("./res/cat/reailstic/2.png")}
+          />
+        )} */}
+        {/* {
+          this.props.imageNumber === 1 ? 
+          <ViroImage
+            scale={[.147, .2079, 0]}
+            position={[0, 0.0001, 0]}
+            rotation={[-90, -90, 0]}
+            source={require("./res/cat/reailstic/1.png")}
           /> :
           <ViroImage
             scale={[.147, .2079, 0]}
             position={[0, 0.0001, 0]}
             rotation={[-90, -90, 0]}
             source={require("./res/cat/reailstic/5.png")}
-          // source={require(this.state.imageTrace)}
           />
-
-
-        }
+        } */}
         </ViroARImageMarker>
       </ViroARScene>
     );
