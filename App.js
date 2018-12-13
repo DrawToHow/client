@@ -70,7 +70,6 @@ export default class ViroSample extends Component {
         <ViroARSceneNavigator style={localStyles.arView} apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
           initialScene={{scene:InitialARScene, passProps:{displayObject:this.state.displayObject}}}
           viroAppProps={this.state.viroAppProps}
-          // imageNumber={this.state.imageNumber}
         />
 
         {this._renderTrackingText()}

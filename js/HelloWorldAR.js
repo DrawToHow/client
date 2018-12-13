@@ -46,7 +46,6 @@ export default class HelloWorldSceneAR extends Component {
     alert(this.props.arSceneNavigator.viroAppProps.imageNumber)
   }
 
-
   takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
 
   render() {
@@ -66,6 +65,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/1.png")}
             /> :
             imageNumber === 2 ?
@@ -73,6 +73,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/2.png")}
             /> :
             imageNumber === 3 ? 
@@ -80,6 +81,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/3.png")}
             /> :
             imageNumber === 4 ? 
@@ -87,6 +89,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/4.png")}
             /> :
             imageNumber === 5 ? 
@@ -94,6 +97,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/5.png")}
             /> :
             imageNumber === 6 ? 
@@ -101,6 +105,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/6.png")}
             /> :
             imageNumber === 7 ? 
@@ -108,6 +113,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
+              placeholderSource={require("./res/local_spinner.gif")}
               source={require("./res/cat/reailstic/7.png")}
             /> :
             null
