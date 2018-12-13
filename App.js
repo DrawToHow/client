@@ -35,10 +35,10 @@ export default class ViroSample extends Component {
     this._onLoadEnd = this._onLoadEnd.bind(this);
 
     this.state = {
-      viroAppProps: {displayObject:false, objectSource:objArray[0], yOffset:0, _onLoadEnd: this._onLoadEnd, _onLoadStart: this._onLoadStart, _onTrackingInit:this._onTrackingInit},
+      viroAppProps: {imageNumber : 1,displayObject:false, objectSource:objArray[0], yOffset:0, _onLoadEnd: this._onLoadEnd, _onLoadStart: this._onLoadStart, _onTrackingInit:this._onTrackingInit},
       trackingInitialized: false,
       isLoading: false,
-      
+      imageNumber : 1
     }
   }
 
@@ -49,18 +49,28 @@ export default class ViroSample extends Component {
   }
 
   previous = () => {
-    alert('prev')
+    this.setState({
+      ...this.state,
+      viroAppProps : {...this.state.viroAppProps,imageNumber: this.state.viroAppProps.imageNumber - 1 } 
+    })
+    alert(this.state.viroAppProps.imageNumber)
   }
 
   next = () => {
-    alert('next')
+    this.setState({
+      ...this.state,
+      viroAppProps : {...this.state.viroAppProps,imageNumber: this.state.viroAppProps.imageNumber + 1 } 
+    })
+    alert(this.state.viroAppProps.imageNumber)
   }
 
   render() {
     return (
       <View style={localStyles.outer} >
         <ViroARSceneNavigator style={localStyles.arView} apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
-          initialScene={{scene:InitialARScene, passProps:{displayObject:this.state.displayObject}}}  viroAppProps={this.state.viroAppProps}
+          initialScene={{scene:InitialARScene, passProps:{displayObject:this.state.displayObject}}}
+          viroAppProps={this.state.viroAppProps}
+          // imageNumber={this.state.imageNumber}
         />
 
         {this._renderTrackingText()}
