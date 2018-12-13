@@ -35,7 +35,8 @@ export default class HelloWorldSceneAR extends Component {
       animal: 'cat',
       type: 'realistic',
       image: 1,
-      imageTrace: './res/cat/reailstic/1.png'
+      imageTrace: './res/cat/reailstic/1.png',
+      opacity: 1
     };
 
     // bind 'this' to functions
@@ -44,28 +45,26 @@ export default class HelloWorldSceneAR extends Component {
 
   componentDidMount() {
     alert(this.props.arSceneNavigator.viroAppProps.imageNumber)
+    alert(this.props.arSceneNavigator.viroAppProps.silderValue)
   }
 
   takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
 
   render() {
-    const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber
+    const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber,
+          sliderValue = this.props.arSceneNavigator.viroAppProps.sliderValue
+
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >
-          {/* <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/2.png")}
-          /> */}
+ 
           {
             imageNumber === 1 ?
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/1.png")}
             /> :
             imageNumber === 2 ?
@@ -73,7 +72,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/2.png")}
             /> :
             imageNumber === 3 ? 
@@ -81,7 +80,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/3.png")}
             /> :
             imageNumber === 4 ? 
@@ -89,7 +88,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/4.png")}
             /> :
             imageNumber === 5 ? 
@@ -97,7 +96,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/5.png")}
             /> :
             imageNumber === 6 ? 
@@ -105,7 +104,7 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/6.png")}
             /> :
             imageNumber === 7 ? 
@@ -113,41 +112,12 @@ export default class HelloWorldSceneAR extends Component {
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
+              opacity={sliderValue / 10}
               source={require("./res/cat/reailstic/7.png")}
             /> :
             null
           }
-        {/* {!imageNumber === 1 ? (
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/1.png")}
-          />
-        ):(
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/2.png")}
-          />
-        )} */}
-        {/* {
-          this.props.imageNumber === 1 ? 
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/1.png")}
-          /> :
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/5.png")}
-          />
-        } */}
+
         </ViroARImageMarker>
       </ViroARScene>
     );
