@@ -22,7 +22,7 @@ import CatAR from '../cat/CatAR'
 export default class ViroSample extends Component {
   constructor() {
     super();
-    this._renderTrackingText = this._renderTrackingText.bind(this);
+    // this._renderTrackingText = this._renderTrackingText.bind(this);
     this._onTrackingInit = this._onTrackingInit.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoadEnd = this._onLoadEnd.bind(this);
@@ -41,7 +41,7 @@ export default class ViroSample extends Component {
       ...this.state,
       viroAppProps: { ...this.state.viroAppProps, imageNumber: this.state.viroAppProps.imageNumber - 1 }
     })
-    alert(this.state.viroAppProps.imageNumber)
+    // alert(this.state.viroAppProps.imageNumber)
   }
 
   next = () => {
@@ -49,7 +49,7 @@ export default class ViroSample extends Component {
       ...this.state,
       viroAppProps: { ...this.state.viroAppProps, imageNumber: this.state.viroAppProps.imageNumber + 1 }
     })
-    alert(this.state.viroAppProps.imageNumber)
+    // alert(this.state.viroAppProps.imageNumber)
   }
 
   sliderChange = value => {
@@ -66,30 +66,23 @@ export default class ViroSample extends Component {
           initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
           viroAppProps={this.state.viroAppProps}
         />
-
-        {this._renderTrackingText()}
-
-        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{position: 'absolute', left: 0, right: 0, bottom: 50 }}>
+          <View style={{ flex: 1, flexDirection: 'row',justifyContent : 'space-between' }}>
+            <TouchableHighlight style={localStyles.buttons}
+              underlayColor={'#00000000'}
+              onPress={this.previous} >
+              <Text style={localStyles.buttonText}>PREV</Text>
+            </TouchableHighlight>
             <Slider
               step={1}
               maximumValue={10}
               onValueChange={this.sliderChange.bind(this)}
               style={localStyles.slider}
             />
-          </View>
-
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={localStyles.buttons}
-              underlayColor={'#00000000'}
-              onPress={this.previous} >
-              <Text>PREV</Text>
-            </TouchableHighlight>
-
             <TouchableHighlight style={localStyles.buttons}
               onPress={this.next}
               underlayColor={'#00000000'} >
-              <Text>NEXT</Text>
+              <Text style={localStyles.buttonText}>NEXT</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -111,18 +104,19 @@ export default class ViroSample extends Component {
     });
   }
 
-  _renderTrackingText() {
-    return (
-      <View style={{ position: 'absolute', backgroundColor: "#ffffff22", left: 30, right: 30, top: 30, alignItems: 'flex-start' }}>
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={this._onDisplayDialog}
-          underlayColor={'#00000000'} >
-          <Image source={require("../../../js/res/btn_mode_objects_on.png")} />
-          {/* <Image source={require("../../")} /> */}
-        </TouchableHighlight>
-      </View>
-    );
-  }
+  // _renderTrackingText() {
+  //   return (
+  //     <View style={{ position: 'absolute', backgroundColor: "#ffffff22", left: 30, right: 30, top: 30, alignItems: 'flex-start' }}>
+
+  //       <TouchableHighlight style={localStyles.buttons}
+  //         onPress={this._onDisplayDialog}
+  //         underlayColor={'#00000000'} >
+  //         <Image source={require("../../../js/res/btn_mode_objects_on.png")} />
+  //         {/* <Image source={require("../../")} /> */}
+  //       </TouchableHighlight>
+  //     </View>
+  //   );
+  // }
 
   _onTrackingInit() {
     this.setState({
@@ -136,18 +130,22 @@ var localStyles = StyleSheet.create({
     flex: 1,
   },
 
+  buttonText : {
+    textAlign : 'center'
+  },
+
   arView: {
     flex: 1,
   },
 
   slider: {
     height: 80,
-    width: 200,
+    width: 150,
     paddingTop: 20,
     paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    top: 30
+    top: 30,
+    margin : 5,
+    opacity : 0.8
   },
 
   buttons: {
@@ -155,14 +153,13 @@ var localStyles = StyleSheet.create({
     width: 80,
     paddingTop: 20,
     paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
     backgroundColor: '#00000000',
-    borderRadius: 10,
+    borderRadius: 50,
     borderWidth: 1,
     borderColor: '#ffffff00',
     backgroundColor: "#ffffff22",
-    top: 30
+    top: 30,
+    margin : 5
   }
 });
 
