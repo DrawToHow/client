@@ -1,173 +1,44 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  ActivityIndicator,
-  Text,
-  View,
-  StyleSheet,
-  TouchableHighlight,
-  Image,
-  Alert,
-  Slider
-} from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
 
-import {
-  ViroARSceneNavigator
-} from 'react-viro';
+// Navigator
+import AppNavigator from './AppNavigator'
 
-import renderIf from './js/helpers/renderIf';
-var InitialARScene = require('./js/HelloWorldAR');
+// Store
+// import rootReducer from './store/reducers/rootReducer'
+// const store = createStore(rootReducer, applyMiddleware(thunk));
 
-export default class ViroSample extends Component {
-  constructor() {
-    super();
-    this._renderTrackingText = this._renderTrackingText.bind(this);
-    this._onTrackingInit = this._onTrackingInit.bind(this);
-    this._onLoadStart = this._onLoadStart.bind(this);
-    this._onLoadEnd = this._onLoadEnd.bind(this);
-
-    this.state = {
-      viroAppProps: {sliderValue: 100, imageNumber : 1, displayObject:false, yOffset:0, _onLoadEnd: this._onLoadEnd, _onLoadStart: this._onLoadStart, _onTrackingInit:this._onTrackingInit},
-      trackingInitialized: false,
-      isLoading: false,
-      imageNumber : 1,
-      sliderValue: 100
-    }
-  }
-
-  componentDidMount() {
-    this.setState({
-      imageTrace: './js/res/cat/reailstic/1.png'
-    })
-  }
-
-  previous = () => {
-    this.setState({
-      ...this.state,
-      viroAppProps : {...this.state.viroAppProps,imageNumber: this.state.viroAppProps.imageNumber - 1 } 
-    })
-    alert(this.state.viroAppProps.imageNumber)
-  }
-
-  next = () => {
-    this.setState({
-      ...this.state,
-      viroAppProps : {...this.state.viroAppProps,imageNumber: this.state.viroAppProps.imageNumber + 1 } 
-    })
-    alert(this.state.viroAppProps.imageNumber)
-  }
-
-  sliderChange = value => {
-    this.setState({
-      ...this.state,
-      viroAppProps: { ...this.state.viroAppProps, sliderValue: value }
-    })
-  }
+const AppContainer = createAppContainer(AppNavigator);
+export default class App extends Component {
 
   render() {
     return (
-      <View style={localStyles.outer} >
-        <ViroARSceneNavigator style={localStyles.arView} apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
-          initialScene={{scene:InitialARScene, passProps:{displayObject:this.state.displayObject}}}
-          viroAppProps={this.state.viroAppProps}
-        />
-
-        {this._renderTrackingText()}
-
-        <View style={{position: 'absolute',  left: 0, right: 0, bottom: 77, alignItems: 'center'}}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Slider
-              step={1}
-              maximumValue={10}
-              onValueChange={this.sliderChange.bind(this)}
-              style={localStyles.slider}
-            />
-          </View>
-
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={localStyles.buttons}
-              underlayColor={'#00000000'}
-              onPress={this.previous} >
-              <Text>PREV</Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight style={localStyles.buttons}
-              onPress={this.next}
-              underlayColor={'#00000000'} >
-              <Text>NEXT</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  // Invoked when a model has started to load, we show a loading indictator.
-  _onLoadStart() {
-    this.setState({
-      isLoading: true,
-    });
-  }
-
-  // Invoked when a model has loaded, we hide the loading indictator.
-  _onLoadEnd() {
-    this.setState({
-      isLoading: false,
-    });
-  }
-
-  _renderTrackingText() {
-    return (
-      <View style={{position: 'absolute', backgroundColor:"#ffffff22", left: 30, right: 30, top: 30, alignItems: 'left'}}>
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={this._onDisplayDialog}
-          underlayColor={'#00000000'} >
-          <Image source={require("./js/res/btn_mode_objects.png")} />
-        </TouchableHighlight>
-      </View>
-    );
-  }
-
-  _onTrackingInit() {
-    this.setState({
-      trackingInitialized: true,
-    });
+      <Provider store={store}>
+        <AppContainer style={styles.container} />
+      </Provider>
+    )
   }
 }
 
-var localStyles = StyleSheet.create({
-  outer : {
-    flex : 1,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-
-  arView: {
-    flex:1,
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
-
-  slider: {
-    height: 80,
-    width: 200,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    top: 30
-  },
-
-  buttons : {
-    height: 80,
-    width: 80,
-    paddingTop:20,
-    paddingBottom:20,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor:'#00000000',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ffffff00',
-    backgroundColor: "#ffffff22", 
-    top: 30
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
   }
 });
-
-module.exports = ViroSample

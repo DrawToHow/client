@@ -7,7 +7,12 @@ import {
   Button,
   View,
   TouchableHighlight,
-  Image
+  Image,
+  AppRegistry,
+  ActivityIndicator,
+  Text,
+  Alert,
+  Slider
 } from 'react-native';
 
 import {
@@ -21,10 +26,13 @@ import {
   ViroARSceneNavigator,
   ViroImage,
   ViroARPlaneSelector,
-  Viro3DObject
+  Viro3DObject,
+  ViroARSceneNavigator
 } from 'react-viro';
 
-export default class HelloWorldSceneAR extends Component {
+import renderIf from '../../../js/helpers/renderIf';
+
+export default class CatAR extends Component {
 
   constructor() {
     super();
@@ -171,5 +179,4 @@ ViroMaterials.createMaterials({
   },
 });
 
-
-module.exports = HelloWorldSceneAR;
+export default CatAR
