@@ -7,7 +7,12 @@ import {
   Button,
   View,
   TouchableHighlight,
-  Image
+  Image,
+  AppRegistry,
+  ActivityIndicator,
+  Text,
+  Alert,
+  Slider
 } from 'react-native';
 
 import {
@@ -21,10 +26,12 @@ import {
   ViroARSceneNavigator,
   ViroImage,
   ViroARPlaneSelector,
-  Viro3DObject
+  Viro3DObject,
 } from 'react-viro';
 
-export default class HelloWorldSceneAR extends Component {
+import renderIf from '../../../js/helpers/renderIf';
+
+export default class CatAR extends Component {
 
   constructor() {
     super();
@@ -35,7 +42,8 @@ export default class HelloWorldSceneAR extends Component {
       animal: 'cat',
       type: 'realistic',
       image: 1,
-      imageTrace: './res/cat/reailstic/1.png'
+      imageTrace: './res/cat/reailstic/1.png',
+      opacity: 1
     };
 
     // bind 'this' to functions
@@ -44,110 +52,79 @@ export default class HelloWorldSceneAR extends Component {
 
   componentDidMount() {
     alert(this.props.arSceneNavigator.viroAppProps.imageNumber)
+    alert(this.props.arSceneNavigator.viroAppProps.silderValue)
   }
 
   takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
 
   render() {
-    const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber
+    const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber,
+          sliderValue = this.props.arSceneNavigator.viroAppProps.sliderValue
+
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >
-          {/* <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/2.png")}
-          /> */}
+ 
           {
             imageNumber === 1 ?
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/1.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/1.png")}
             /> :
             imageNumber === 2 ?
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/2.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/2.png")}
             /> :
             imageNumber === 3 ? 
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/3.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/3.png")}
             /> :
             imageNumber === 4 ? 
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/4.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/4.png")}
             /> :
             imageNumber === 5 ? 
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/5.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/5.png")}
             /> :
             imageNumber === 6 ? 
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/6.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/6.png")}
             /> :
             imageNumber === 7 ? 
             <ViroImage
               scale={[.147, .2079, 0]}
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
-              placeholderSource={require("./res/local_spinner.gif")}
-              source={require("./res/cat/reailstic/7.png")}
+              opacity={sliderValue / 10}
+              source={require("../../../js/res/cat/reailstic/7.png")}
             /> :
             null
           }
-        {/* {!imageNumber === 1 ? (
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/1.png")}
-          />
-        ):(
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/2.png")}
-          />
-        )} */}
-        {/* {
-          this.props.imageNumber === 1 ? 
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/1.png")}
-          /> :
-          <ViroImage
-            scale={[.147, .2079, 0]}
-            position={[0, 0.0001, 0]}
-            rotation={[-90, -90, 0]}
-            source={require("./res/cat/reailstic/5.png")}
-          />
-        } */}
+
         </ViroARImageMarker>
       </ViroARScene>
     );
@@ -164,10 +141,9 @@ export default class HelloWorldSceneAR extends Component {
   }
 }
 
-
 ViroARTrackingTargets.createTargets({
   "targetOne": {
-    source: require('./res/targetOne.jpg'),
+    source: require('../../../js/res/targetOne.jpg'),
     orientation: "Left",
     physicalWidth: 0.21 // paper width IRL
   },
@@ -197,9 +173,6 @@ var styles = StyleSheet.create({
 
 ViroMaterials.createMaterials({
   grid: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
+    diffuseTexture: require('../../../js/res/grid_bg.jpg'),
   },
 });
-
-
-module.exports = HelloWorldSceneAR;
