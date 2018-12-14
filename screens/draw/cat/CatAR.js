@@ -27,7 +27,6 @@ import {
   ViroImage,
   ViroARPlaneSelector,
   Viro3DObject,
-  ViroARSceneNavigator
 } from 'react-viro';
 
 import renderIf from '../../../js/helpers/renderIf';
@@ -73,7 +72,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/1.png")}
+              source={require("../../../js/res/cat/reailstic/1.png")}
             /> :
             imageNumber === 2 ?
             <ViroImage
@@ -81,7 +80,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/2.png")}
+              source={require("../../../js/res/cat/reailstic/2.png")}
             /> :
             imageNumber === 3 ? 
             <ViroImage
@@ -89,7 +88,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/3.png")}
+              source={require("../../../js/res/cat/reailstic/3.png")}
             /> :
             imageNumber === 4 ? 
             <ViroImage
@@ -97,7 +96,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/4.png")}
+              source={require("../../../js/res/cat/reailstic/4.png")}
             /> :
             imageNumber === 5 ? 
             <ViroImage
@@ -105,7 +104,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/5.png")}
+              source={require("../../../js/res/cat/reailstic/5.png")}
             /> :
             imageNumber === 6 ? 
             <ViroImage
@@ -113,7 +112,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/6.png")}
+              source={require("../../../js/res/cat/reailstic/6.png")}
             /> :
             imageNumber === 7 ? 
             <ViroImage
@@ -121,7 +120,7 @@ export default class CatAR extends Component {
               position={[0, 0.0001, 0]}
               rotation={[-90, -90, 0]}
               opacity={sliderValue / 10}
-              source={require("./res/cat/reailstic/7.png")}
+              source={require("../../../js/res/cat/reailstic/7.png")}
             /> :
             null
           }
@@ -142,10 +141,9 @@ export default class CatAR extends Component {
   }
 }
 
-
 ViroARTrackingTargets.createTargets({
   "targetOne": {
-    source: require('./res/targetOne.jpg'),
+    source: require('../../../js/res/targetOne.jpg'),
     orientation: "Left",
     physicalWidth: 0.21 // paper width IRL
   },
@@ -175,8 +173,6 @@ var styles = StyleSheet.create({
 
 ViroMaterials.createMaterials({
   grid: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
+    diffuseTexture: require('../../../js/res/grid_bg.jpg'),
   },
 });
-
-export default CatAR

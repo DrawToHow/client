@@ -16,7 +16,8 @@ import {
 } from 'react-viro';
 
 import renderIf from '../../../js/helpers/renderIf';
-var InitialARScene = require('../cat/CatAR');
+// var InitialARScene = require('../cat/CatAR');
+import CatAR from '../cat/CatAR'
 
 export default class ViroSample extends Component {
   constructor() {
@@ -62,7 +63,7 @@ export default class ViroSample extends Component {
     return (
       <View style={localStyles.outer} >
         <ViroARSceneNavigator style={localStyles.arView} apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
-          initialScene={{ scene: InitialARScene, passProps: { displayObject: this.state.displayObject } }}
+          initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
           viroAppProps={this.state.viroAppProps}
         />
 
@@ -116,8 +117,8 @@ export default class ViroSample extends Component {
         <TouchableHighlight style={localStyles.buttons}
           onPress={this._onDisplayDialog}
           underlayColor={'#00000000'} >
-          <Image source={require("./js/res/btn_mode_objects.png")} />
-          <Image source={require("../../")} />
+          <Image source={require("../../../js/res/btn_mode_objects_on.png")} />
+          {/* <Image source={require("../../")} /> */}
         </TouchableHighlight>
       </View>
     );

@@ -12,14 +12,14 @@ import AppNavigator from './AppNavigator'
 // import rootReducer from './store/reducers/rootReducer'
 // const store = createStore(rootReducer, applyMiddleware(thunk));
 
-const AppContainer = createAppContainer(AppNavigator);
+// const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <AppContainer style={styles.container} />
-      </Provider>
+      // <Provider store={store}>
+        <AppNavigator style={styles.container} />
+      // </Provider>
     )
   }
 }

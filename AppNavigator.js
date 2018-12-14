@@ -4,13 +4,15 @@ import { createBottomTabNavigator, createStackNavigator } from "react-navigation
 // import Icon from 'react-native-vector-icons/FontAwesome5'
 
 // Screens
-import Cat from './screens/draw/cat/CatAR'
+import CatAR from './screens/draw/cat/CatAR'
+import CoreAR from './screens/draw/core/CoreAR'
+import OpeningScreen from './screens/opening/OpeningScreen'
 // import Nearby from './screens/Nearby'
 // import NearbyDetail from './screens/Nearby/NearbyDetail'
 // import Gmap from './screens/Gmap'
 
 // Styles
-import styles from './GlobalStyles'
+// import styles from './GlobalStyles'
 
 const AppNavigator = createStackNavigator(
   {
@@ -26,12 +28,15 @@ const AppNavigator = createStackNavigator(
     // Map: {
     //   screen: Gmap
     // }
+    Opening: {
+      screen: OpeningScreen
+    },
     CatAR: {
-      screen: CatAR
-    }
+      screen: CoreAR
+    },
   },
   {
-    initialRouteName: 'CatAR',
+    initialRouteName: 'Opening',
     tabBarOptions: {
       activeTintColor: '#E71D36',
       inactiveTintColor: '#FDFFFC',
