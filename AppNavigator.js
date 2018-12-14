@@ -36,7 +36,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Opening',
+    initialRouteName: 'CatAR',
     tabBarOptions: {
       activeTintColor: '#E71D36',
       inactiveTintColor: '#FDFFFC',
