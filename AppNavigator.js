@@ -7,6 +7,9 @@ import { createBottomTabNavigator, createStackNavigator } from "react-navigation
 import CatAR from './screens/draw/cat/CatAR'
 import CoreAR from './screens/draw/core/CoreAR'
 import OpeningScreen from './screens/opening/OpeningScreen'
+import SignIn from './screens/opening/SignIn'
+import SignUp from './screens/opening/SignUp'
+
 // import Nearby from './screens/Nearby'
 // import NearbyDetail from './screens/Nearby/NearbyDetail'
 // import Gmap from './screens/Gmap'
@@ -34,9 +37,15 @@ const AppNavigator = createStackNavigator(
     CatAR: {
       screen: CoreAR
     },
+    SignIn: {
+      screen: SignIn
+    },
+    SignUp: {
+      screen: SignUp
+    }
   },
   {
-    initialRouteName: 'CatAR',
+    initialRouteName: 'SignIn',
     tabBarOptions: {
       activeTintColor: '#E71D36',
       inactiveTintColor: '#FDFFFC',
