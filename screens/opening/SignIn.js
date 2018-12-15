@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import firebase from '../../configs/firebaseConfig'
-import { server } from '../../configs/endPoint'
+import server from '../../configs/endPoint'
 import axios from 'axios'
 
 class SignIn extends Component {
@@ -12,7 +12,25 @@ class SignIn extends Component {
     }
 
     singInHandler = () => {
-      this.props.navigation.navigate('CatAR')
+        this.props.navigation.navigate('Opening')
+        // alert(JSON.stringify(server.url+'/auth/signin'))
+        // axios({
+        //     method: 'POST',
+        //     url: server.url+'/auth/signin',
+        //     data: {
+        //         email: this.state.email,
+        //         password: this.state.password
+
+        //     }
+        // })
+        // .then(() => {
+        //     this.props.navigation.navigate('CatAR')
+        // })
+        // .catch(err => {
+        //     this.setState({error: err.message}, () => {
+        //         alert(JSON.stringify(err.message))
+        //     })
+        // })
     }
     render() {
         return (
