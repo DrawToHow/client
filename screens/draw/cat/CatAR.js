@@ -51,8 +51,6 @@ export default class CatAR extends Component {
   }
 
   componentDidMount() {
-    alert(this.props.arSceneNavigator.viroAppProps.imageNumber)
-    alert(this.props.arSceneNavigator.viroAppProps.silderValue)
   }
 
   takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
@@ -168,11 +166,5 @@ var styles = StyleSheet.create({
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
-  },
-});
-
-ViroMaterials.createMaterials({
-  grid: {
-    diffuseTexture: require('../../../js/res/grid_bg.jpg'),
   },
 });

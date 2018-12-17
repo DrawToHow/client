@@ -1,60 +1,77 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
-import { createBottomTabNavigator, createStackNavigator, createDrawerNavigator } from "react-navigation";
-// import Icon from 'react-native-vector-icons/FontAwesome5'
+import { 
+  createBottomTabNavigator, 
+  createStackNavigator, 
+  createDrawerNavigator 
+} from "react-navigation";
 
 // Screens
-import CatAR from './screens/draw/cat/CatAR'
-import CoreAR from './screens/draw/core/CoreAR'
-import OpeningScreen from './screens/opening/OpeningScreen'
-import SignIn from './screens/opening/SignIn'
-import SignUp from './screens/opening/SignUp' 
 
-// import Nearby from './screens/Nearby'
-// import NearbyDetail from './screens/Nearby/NearbyDetail'
-// import Gmap from './screens/Gmap'
+// ? Starting
+import AnimationOpening from './screens/animationOpening/animationOpening'
+import LandingPage from './screens/landingPage/LandingPage'
+
+import CoreAR from './screens/draw/core/CoreAR'
+import SignIn from './screens/signin/SignIn'
+import Register from './screens/register/Register' 
+
+import DifficultySelector from './screens/difficultySelector/DifficultySelector'
+import SketchSelector from './screens/sketchSelector/SketchSelector'
 
 // Styles
 // import styles from './GlobalStyles'
 
 const AppNavigator = createStackNavigator(
   {
-    // Home: {
-    //   screen: Home,
-    // },
-    // Nearby: {
-    //   screen: createStackNavigator({
-    //     Nearby: Nearby,
-    //     Detail: NearbyDetail
-    //   })
-    // },
-    // Map: {
-    //   screen: Gmap
-    // }
-    Opening: {
-      screen: OpeningScreen
+    // ? Starting
+    AnimationOpening: {
+      screen: AnimationOpening,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
     },
-    CatAR: {
-      screen: CoreAR
+    LandingPage: {
+      screen: LandingPage,
+      navigationOptions: ({ navigation }) => ({
+        // header: null
+        
+      })
     },
+    
+    // ? User
     SignIn: {
-      screen: SignIn
+      screen: SignIn,
+      navigationOptions: ({ navigation }) => ({
+        // header: null
+      })
     },
-    SignUp: {
-      screen: SignUp
-    }
+    Register: {
+      screen: Register,
+      navigationOptions: ({ navigation }) => ({
+        // header: null
+      })
+    },
+
+    // ? Choosing
+    DifficultySelector: {
+      screen: DifficultySelector
+    },
+    SketchSelector: {
+      screen: SketchSelector
+    },
+
+    // ? Drawing
+    CatAR: {
+      screen: CoreAR,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
   },
   {
-    initialRouteName: 'SignIn',
-    tabBarOptions: {
-      activeTintColor: '#E71D36',
-      inactiveTintColor: '#FDFFFC',
-      // backgroundColor: '#011627',
-      showIcon: false,
-      style: {
-        backgroundColor: '#011627',
-      },
-    },
+    initialRouteName: 'CatAR',
+
   }
 );
 

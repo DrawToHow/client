@@ -59,12 +59,29 @@ export default class ViroSample extends Component {
     })
   }
 
+  componentDidMount() {
+    this._arScene.sceneNavigator.startVideoRecording('haha', true, () => {
+      Alert.alert('error')
+    })
+
+    const result = this._arScene.sceneNavigator.takeScreenshot('foto', false)
+
+    setTimeout(() => {
+      this._arScene.sceneNavigator.stopVideoRecording()
+      Alert.alert(JSON.stringify(result))
+    }, 1000)
+  }
+
   render() {
     return (
       <View style={localStyles.outer} >
-        <ViroARSceneNavigator style={localStyles.arView} apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
+        <ViroARSceneNavigator 
+          style={localStyles.arView} 
+          apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
           initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
           viroAppProps={this.state.viroAppProps}
+          ref={(c) => this._arScene = c}
+          // ref="_arScene"
         />
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 50 }}>
           <View style={{ flex: 1, flexDirection: 'row',justifyContent : 'space-between' }}>
