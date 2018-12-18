@@ -72,7 +72,7 @@ export default class SketchSelector extends Component {
             difficulty === 'easy' ?
 
             <ScrollView>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('CoreAR', {
                   sketch: 'dog'
                 })}>
@@ -81,7 +81,7 @@ export default class SketchSelector extends Component {
                   source={require('../../js/res/sketchSelector/easy/Dog.png')}
                   resizeMode="contain"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <TouchableOpacity>
                 <Image

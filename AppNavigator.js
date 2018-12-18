@@ -19,6 +19,7 @@ import Register from './screens/register/Register'
 import DifficultySelector from './screens/difficultySelector/DifficultySelector'
 import SketchSelector from './screens/sketchSelector/SketchSelector'
 
+import ProfilePage from './screens/profile/Profile'
 // Styles
 // import styles from './GlobalStyles'
 
@@ -52,7 +53,6 @@ const AppNavigator = createStackNavigator(
         // header: null
       })
     },
-
     // ? Choosing
     DifficultySelector: {
       screen: DifficultySelector
@@ -68,9 +68,12 @@ const AppNavigator = createStackNavigator(
         
       })
     },
+    Profile : {
+      screen : ProfilePage,
+    }
   },
   {
-    initialRouteName: 'CoreAR'
+    initialRouteName: 'SignIn'
   }
 );
 
