@@ -62,19 +62,32 @@ export default class LandingPage extends Component {
         <View></View>
 
         <View style={styles.LandingPageMid}>
-          <Text style={styles.difficultySelectorDisabled}>
+          <Text 
+            style={styles.difficultySelectorDisabled}>
             Beginner
           </Text>
 
-          <Text style={styles.difficultySelectorMain}>
+          <Text 
+            style={styles.difficultySelectorMain}
+            onPress={() => this.props.navigation.navigate('SketchSelector', {
+              difficulty: 'easy'
+            })}>
             Easy
           </Text>
 
-          <Text style={styles.difficultySelectorMain}>
+          <Text
+            style={styles.difficultySelectorMain}
+            onPress={() => this.props.navigation.navigate('SketchSelector', {
+              difficulty: 'normal'
+            })}>
             Normal
           </Text>
 
-          <Text style={styles.difficultySelectorMain}>
+          <Text
+            style={styles.difficultySelectorMain}
+            onPress={() => this.props.navigation.navigate('SketchSelector', {
+              difficulty: 'hard'
+            })}>
             Hard
           </Text>
 

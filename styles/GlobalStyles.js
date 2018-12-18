@@ -166,6 +166,16 @@ export default styles = StyleSheet.create({
     width: null,
     height: null,
     resizeMode: 'cover'
+  },
+
+  sketchSelectorMid: {
+    alignItems: 'center',
+    marginTop: 50
+  },
+
+  coreARModal: {
+    backgroundColor: 'rgba(26, 26, 26, 0.45)',
+
   }
 
 

@@ -15,7 +15,8 @@ import {
   Text,
   Alert,
   Slider,
-  ImageBackground
+  ImageBackground,
+  ScrollView
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
@@ -58,43 +59,106 @@ export default class SketchSelector extends Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const difficulty = navigation.getParam('difficulty');
+
 
     return (
       <View style={styles.LandingPageView}>
         <View></View>
 
-        <View style={styles.LandingPageMid}>
+        <View style={styles.sketchSelectorMid}>
+          {
+            difficulty === 'easy' ?
 
-          <TouchableOpacity>
-            <Image
-              style={{ height: 250, width: 380 }}
-              source={require('../../js/res/sketchSelector/easy/dog.png')}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+            <ScrollView>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('CoreAR', {
+                  sketch: 'dog'
+                })}>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/easy/Dog.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Image
-              style={{ height: 250, width: 380 }}
-              source={require('../../js/res/sketchSelector/easy/dog.png')}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/easy/Cow.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </ScrollView>
 
-          <TouchableOpacity>
-            <Image
-              style={{ height: 250, width: 380 }}
-              source={require('../../js/res/sketchSelector/easy/dog.png')}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+            :
+
+            difficulty === 'normal' ?
+
+            <ScrollView>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('CoreAR', {
+                  sketch: 'cat'
+                })}>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/normal/Cat.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/normal/Horse.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/normal/Rat.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </ScrollView>
+
+            :
+
+            difficulty === 'hard' ?
+
+            <ScrollView>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('CoreAR', {
+                  sketch: 'dragon'
+                })}>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/hard/Dragon.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={require('../../js/res/sketchSelector/hard/Eyes.png')}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </ScrollView>
+
+            :
+
+            null
+          }
+
 
         </View>
 
         <View style={styles.LandingPageBottom}>
-          {/* <Text style={styles.difficultySelectorBottom}>
-            You can always go back and choose another difficulty. Each level have different sketches to draw from, keeping you from boredom.
-          </Text> */}
         </View>
       </View>
     );
