@@ -12,11 +12,17 @@ import {
 
 import styles from '../../styles/GlobalStyles'
 
+import ViewShot from "react-native-view-shot";
+
 // You can then use your `FadeInView` in place of a `View` in your components:
 export default class App extends React.Component {
 
   state = {
     fadeAnim: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    Alert.alert('hehehhee')
   }
 
   render() {

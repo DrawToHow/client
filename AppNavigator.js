@@ -62,16 +62,15 @@ const AppNavigator = createStackNavigator(
     },
 
     // ? Drawing
-    CatAR: {
+    CoreAR: {
       screen: CoreAR,
       navigationOptions: ({ navigation }) => ({
-        header: null
+        
       })
     },
   },
   {
-    initialRouteName: 'CatAR',
-
+    initialRouteName: 'CoreAR'
   }
 );
 

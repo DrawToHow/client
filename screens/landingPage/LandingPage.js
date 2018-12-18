@@ -19,7 +19,8 @@ import {
 
 import styles from '../../styles/GlobalStyles'
 
-import { NativeModules } from 'react-native'
+// import ViewShot from 'react-native-view-shot'
+import ViewShot, { captureRef } from "react-native-view-shot";
 
 // import { Examples } from '@shoutem/ui';
 
@@ -36,6 +37,18 @@ class Logo extends React.Component {
 
 export default class LandingPage extends Component {
 
+  screenShot = () => {
+    captureRef(this._ref, {
+      format: "jpg",
+      quality: 0.8
+    })
+      .then(
+        uri => Alert.alert("Image saved to", JSON.stringify(uri)),
+        error => Alert.alert("Oops, snapshot failed", JSON.stringify(error))
+      );
+  }
+
+  
   static navigationOptions = {
     headerTitle: <Logo />,
     // headerRight: <Logo />,
@@ -47,14 +60,19 @@ export default class LandingPage extends Component {
     }
   };
 
+  componentDidMount() {
+  }
+
   render() {
     return (
-      <View style={styles.LandingPageView}>
+      <View ref={ref => { this._ref = ref }} style={styles.LandingPageView}>
         <View></View>
 
         <View style={styles.LandingPageMid}>
           <Text style={styles.LandingPageMain}
-            onPress={() => this.props.navigation.navigate('SignIn')}>
+            onPress={() => this.props.navigation.navigate('SignIn')}
+            // onPress={() => this.screenShot}
+          >
             Sign In
           </Text>
 

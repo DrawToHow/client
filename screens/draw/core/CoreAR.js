@@ -8,18 +8,57 @@ import {
   TouchableHighlight,
   Image,
   Alert,
-  Slider
+  Slider,
+  Modal
 } from 'react-native';
 
 import {
   ViroARSceneNavigator
 } from 'react-viro';
 
+import { captureRef } from "react-native-view-shot";
+
 import renderIf from '../../../js/helpers/renderIf';
 // var InitialARScene = require('../cat/CatAR');
 import CatAR from '../cat/CatAR'
 
+import styles from '../../../styles/GlobalStyles'
+
+class Logo extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('../../../js/res/logo/gogh1-red-large.png')}
+        style={{ width: 60, height: 60, marginTop: 20 }}
+      />
+    );
+  }
+}
+
+class PreviousButton extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('../../../js/res/icons/prev.png')}
+        style={{ width: 60, height: 60, marginLeft: 20 }}
+      />
+    );
+  }
+}
+
+class NextButton extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('../../../js/res/icons/next.png')}
+        style={{ width: 60, height: 60, marginRight: 20 }}
+      />
+    );
+  }
+}
+
 export default class ViroSample extends Component {
+
   constructor() {
     super();
     // this._renderTrackingText = this._renderTrackingText.bind(this);
@@ -32,7 +71,26 @@ export default class ViroSample extends Component {
       trackingInitialized: false,
       isLoading: false,
       imageNumber: 1,
-      sliderValue: 100
+      sliderValue: 100,
+      modalVisible: false,
+    }
+  }
+
+  state = {
+    modalVisible: false
+  }
+
+  setModalVisible = visible => {
+    this.setState({ modalVisible: visible });
+  }
+
+  static navigationOptions = ({ navigation }) => { 
+    return { 
+      headerTitle: <Logo />, 
+      headerTransparent: true, 
+      headerStyle: {borderBottomWidth: 0},
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   }
 
@@ -42,6 +100,21 @@ export default class ViroSample extends Component {
       viroAppProps: { ...this.state.viroAppProps, imageNumber: this.state.viroAppProps.imageNumber - 1 }
     })
     // alert(this.state.viroAppProps.imageNumber)
+  }
+
+  submit = () => {
+    captureRef(this.refs["NEGER"], {
+      format: "png",
+      quality: 0.9,
+      result: "tmpfile",
+      snapshotContentContainer: false
+    })
+      .then(res => {
+        Alert.alert(JSON.stringify(res))
+      })
+      .catch(err => {
+        Alert.alert(JSON.stringify(err))
+      })
   }
 
   next = () => {
@@ -60,50 +133,94 @@ export default class ViroSample extends Component {
   }
 
   componentDidMount() {
-    this._arScene.sceneNavigator.startVideoRecording('haha', true, () => {
-      Alert.alert('error')
-    })
-
-    const result = this._arScene.sceneNavigator.takeScreenshot('foto', false)
-
-    setTimeout(() => {
-      this._arScene.sceneNavigator.stopVideoRecording()
-      Alert.alert(JSON.stringify(result))
-    }, 1000)
   }
 
   render() {
     return (
-      <View style={localStyles.outer} >
-        <ViroARSceneNavigator 
-          style={localStyles.arView} 
-          apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
-          initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
-          viroAppProps={this.state.viroAppProps}
-          ref={(c) => this._arScene = c}
-          // ref="_arScene"
-        />
-        <View style={{position: 'absolute', left: 0, right: 0, bottom: 50 }}>
-          <View style={{ flex: 1, flexDirection: 'row',justifyContent : 'space-between' }}>
-            <TouchableHighlight style={localStyles.buttons}
-              underlayColor={'#00000000'}
-              onPress={this.previous} >
-              <Text style={localStyles.buttonText}>PREV</Text>
-            </TouchableHighlight>
-            <Slider
-              step={1}
-              maximumValue={10}
-              onValueChange={this.sliderChange.bind(this)}
-              style={localStyles.slider}
-            />
-            <TouchableHighlight style={localStyles.buttons}
-              onPress={this.next}
-              underlayColor={'#00000000'} >
-              <Text style={localStyles.buttonText}>NEXT</Text>
-            </TouchableHighlight>
+        <View 
+        style={localStyles.outer} 
+        ref="scene"
+        ref={(c) => this._arScene = c}
+        >
+          {
+            this.state.modalVisible ?
+              <Modal
+                animationType="slide"
+                transparent={true}
+                style={styles.coreARModal}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                  Alert.alert('Modal has been closed.');
+                }}>
+                <View style={{ flex: 1, marginTop: 22, backgroundColor: 'rgba(26, 26, 26, 0.45)' }}>
+                  <View>
+                    <Text>Hello World!</Text>
+
+                    <TouchableHighlight
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}>
+                      <Text>Hide Modal</Text>
+                    </TouchableHighlight>
+                  </View>
+                </View>
+              </Modal>
+
+              :
+
+              null
+          }
+          <ViroARSceneNavigator
+            
+            style={localStyles.arView} 
+            apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
+            initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
+            viroAppProps={this.state.viroAppProps}
+            
+          />
+          <View style={{position: 'absolute', left: 0, right: 0, bottom: 50 }}>
+            <View style={{
+              flex: 1, justifyContent: 'center',
+              alignItems: 'center', flexDirection: 'row',justifyContent : 'space-between' }}>
+
+              {
+                this.state.viroAppProps.imageNumber > 1 ?
+
+                <TouchableHighlight onPress={this.previous}>
+                  <PreviousButton />
+                </TouchableHighlight>
+
+                :
+
+                <TouchableHighlight>
+                  <PreviousButton />
+                </TouchableHighlight>
+              }
+
+              <Slider
+                step={1}
+                maximumValue={10}
+                onValueChange={this.sliderChange.bind(this)}
+                style={localStyles.slider}
+              />
+
+              {
+                this.state.viroAppProps.imageNumber < 7 ?
+
+                <TouchableHighlight onPress={this.next}>
+                  <NextButton />
+                </TouchableHighlight>
+
+                :
+
+                <TouchableHighlight onPress={() => this.submit()}>
+                  <Text>Submit</Text>
+                </TouchableHighlight>
+              }
+
+            </View>
           </View>
         </View>
-      </View>
     );
   }
 
@@ -120,20 +237,6 @@ export default class ViroSample extends Component {
       isLoading: false,
     });
   }
-
-  // _renderTrackingText() {
-  //   return (
-  //     <View style={{ position: 'absolute', backgroundColor: "#ffffff22", left: 30, right: 30, top: 30, alignItems: 'flex-start' }}>
-
-  //       <TouchableHighlight style={localStyles.buttons}
-  //         onPress={this._onDisplayDialog}
-  //         underlayColor={'#00000000'} >
-  //         <Image source={require("../../../js/res/btn_mode_objects_on.png")} />
-  //         {/* <Image source={require("../../")} /> */}
-  //       </TouchableHighlight>
-  //     </View>
-  //   );
-  // }
 
   _onTrackingInit() {
     this.setState({
@@ -158,10 +261,7 @@ var localStyles = StyleSheet.create({
   slider: {
     height: 80,
     width: 150,
-    paddingTop: 20,
     paddingBottom: 20,
-    top: 30,
-    margin : 5,
     opacity : 0.8
   },
 
