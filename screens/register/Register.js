@@ -13,6 +13,8 @@ import firebase from '../../configs/firebaseConfig'
 
 import styles from '../../styles/GlobalStyles'
 
+import axios from 'axios'
+
 class Logo extends React.Component {
   render() {
     return (
@@ -23,7 +25,6 @@ class Logo extends React.Component {
     );
   }
 }
-
 
 class Register extends Component {
 
@@ -39,22 +40,30 @@ class Register extends Component {
   };
 
   state = {
-    email: '',
-    password: '',
+    name : 'hadi2',
+    email: 'hadi2@mail.com',
+    password: 'secret',
     error: ''
   }
   
   RegisterHandler = () => {
-    Alert.alert('masok!')
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => {
-          this.props.navigation.navigate('SignIn')
-      })
-      .catch(err => {
-          this.setState({error: err.message})
-      })
+    // alert(JSON.stringify(this.state))
+    const data = {
+      name : this.state.name,
+      email : this.state.email,
+      password : this.state.password
+    }
+    axios({
+      method : 'POST',
+      url : `https://ke5fe3javb.execute-api.eu-central-1.amazonaws.com/dev/users/register`,
+      data : data
+    })
+    .then((response)=>{
+      this.props.navigation.navigate('SignIn')
+    })
+    .catch((error)=>{
+      alert('register error')
+    })
   }
 
   render() {
@@ -64,6 +73,14 @@ class Register extends Component {
         keyboardShouldPersistTaps='handled'>
         <View style={styles.registerView}>
           {this.state.error ? <Text>{this.state.error}</Text> : null}
+
+            <TextInput
+              placeholder="Name"
+              autoCapitalize="none"
+              style={styles.RegisterForm}
+              onChangeText={name => this.setState({ name })}
+              value={this.state.name}
+            />
 
             <TextInput
               placeholder="Email"

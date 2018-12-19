@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 
-
 import {
   StyleSheet,
   Button,
@@ -14,12 +13,11 @@ import {
   ActivityIndicator,
   Text,
   Alert,
-  Slider
+  Slider,
+  AsyncStorage
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
-
-// import { Examples } from '@shoutem/ui';
 
 class Logo extends React.Component {
   render() {
@@ -33,28 +31,34 @@ class Logo extends React.Component {
 }
 
 class Profile extends React.Component {
+  _goToProfile = () => {
+    this.props.navigation.navigate('Profile')
+  }
   render() {
     return (
-      <Image
-        source={require('../../js/res/logo/user-profile.png')}
-        style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
-      />
+      <TouchableOpacity onPress={this._goToProfile}>
+        <Image
+          source={require('../../js/res/logo/user-profile.png')}
+          style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
+        />
+      </TouchableOpacity>
     );
   }
 }
 
 export default class LandingPage extends Component {
-
-  static navigationOptions = {
-    headerTitle: <Logo />,
-    headerRight: <Profile />,
-    headerStyle: {
-      backgroundColor: '#ffffff',
-      borderBottomWidth: 0,
-      justifyContent: 'center',
-      alignItems: 'center'
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: <Logo />,
+      headerRight: <Profile navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: '#ffffff',
+        borderBottomWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     }
-  };
+  }
 
   render() {
     return (
@@ -98,7 +102,7 @@ export default class LandingPage extends Component {
 
         <View style={styles.LandingPageBottom}>
           <Text style={styles.difficultySelectorBottom}>
-            You can always go back and choose another difficulty. Each level have different sketches to draw from, keeping you from boredom.
+            You can always go back and choose another difficulty. Each level have different sketches to draw from, keep you away from boredom.
           </Text>
         </View>
       </View>

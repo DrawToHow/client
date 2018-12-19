@@ -9,9 +9,9 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
-import firebase from '../../configs/firebaseConfig'
-import server from '../../configs/endPoint'
 import axios from 'axios'
+
+import { AsyncStorage } from "react-native"
 
 import styles from '../../styles/GlobalStyles'
 
@@ -25,7 +25,6 @@ class Logo extends React.Component {
     );
   }
 }
-
 
 class SignIn extends Component {
 
@@ -41,22 +40,37 @@ class SignIn extends Component {
   };
 
   state = {
-    email: '',
-    password: '',
+    email: 'hadi@mail.com',
+    password: 'secret',
     error: ''
   }
 
   SignInHandler = () => {
-    this.props.navigation.navigate('DifficultySelector')
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(this.state.email, this.state.password)
-    //   .then(() => {
-    //     this.props.navigation.navigate('SignIn')
-    //   })
-    //   .catch(err => {
-    //     this.setState({ error: err.message })
-    //   })
+    const data = {
+      email : this.state.email,
+      password : this.state.password
+    }
+    axios({
+      method : 'POST',
+      url : 'https://ke5fe3javb.execute-api.eu-central-1.amazonaws.com/dev/users/login',
+      data
+    })
+    .then(({data})=>{
+      this._storeData(data.accessToken)
+      this.props.navigation.navigate('DifficultySelector')
+    })
+    .catch((error)=>{
+      alert('sign in error')
+    })
+  }
+
+  _storeData = async (accessToken) => {
+    try {
+      await AsyncStorage.setItem('Access-Token',  accessToken);
+    } catch (error) {
+      // Error saving data
+      alert('error saving to async storage')
+    }
   }
 
   render() {
