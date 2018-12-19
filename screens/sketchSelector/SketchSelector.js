@@ -35,33 +35,39 @@ class Logo extends React.Component {
 }
 
 class Profile extends React.Component {
+  _goToProfile = () => {
+    this.props.navigation.navigate('Profile')
+  }
   render() {
     return (
-      <Image
-        source={require('../../js/res/logo/user-profile.png')}
-        style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
-      />
+      <TouchableOpacity onPress={this._goToProfile}>
+        <Image
+          source={require('../../js/res/logo/user-profile.png')}
+          style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
+        />
+      </TouchableOpacity>
     );
   }
 }
 
 export default class SketchSelector extends Component {
 
-  static navigationOptions = {
-    headerTitle: <Logo />,
-    headerRight: <Profile />,
-    headerStyle: {
-      backgroundColor: '#ffffff',
-      borderBottomWidth: 0,
-      justifyContent: 'center',
-      alignItems: 'center'
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: <Logo />,
+      headerRight: <Profile navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: '#ffffff',
+        borderBottomWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     }
-  };
+  }
 
   render() {
     const { navigation } = this.props;
     const difficulty = navigation.getParam('difficulty');
-
 
     return (
       <View style={styles.LandingPageView}>

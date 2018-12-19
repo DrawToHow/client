@@ -9,14 +9,17 @@ import {
   Image,
   Alert,
   Slider,
-  Modal
+  Modal,
+  AsyncStorage
 } from 'react-native';
 
 import {
   ViroARSceneNavigator
 } from 'react-viro';
 
-import { captureRef } from "react-native-view-shot";
+// import { captureRef } from "react-native-view-shot";
+
+import axios from 'axios'
 
 import renderIf from '../../../js/helpers/renderIf';
 // var InitialARScene = require('../cat/CatAR');
@@ -73,12 +76,14 @@ export default class ViroSample extends Component {
       imageNumber: 1,
       sliderValue: 100,
       modalVisible: false,
+      startDate : '',
+      token : ''
     }
   }
 
-  state = {
-    modalVisible: false
-  }
+  // state = {
+  //   modalVisible: false
+  // }
 
   setModalVisible = visible => {
     this.setState({ modalVisible: visible });
@@ -103,18 +108,40 @@ export default class ViroSample extends Component {
   }
 
   submit = () => {
-    captureRef(this.refs["NEGER"], {
-      format: "png",
-      quality: 0.9,
-      result: "tmpfile",
-      snapshotContentContainer: false
+    // this.props.navigation.navigate('GameOver')
+    // captureRef(this.refs["NEGER"], {
+    //   format: "png",
+    //   quality: 0.9,
+    //   result: "tmpfile",
+    //   snapshotContentContainer: false
+    // })
+    //   .then(res => {
+    //     Alert.alert(JSON.stringify(res))
+    //   })
+    //   .catch(err => {
+    //     Alert.alert(JSON.stringify(err))
+    //   })
+    const diff = Math.abs(new Date() - this.state.startDate);
+
+    axios({
+      method : "POST",
+      url : `https://ke5fe3javb.execute-api.eu-central-1.amazonaws.com/dev/histories/`,
+      data : {
+        tutorialId : 'catTutorial',
+        time : diff,
+        score : 'not defined'
+      },
+      headers : {
+        "Access-Token" : this.state.token
+      }
     })
-      .then(res => {
-        Alert.alert(JSON.stringify(res))
-      })
-      .catch(err => {
-        Alert.alert(JSON.stringify(err))
-      })
+    .then((response)=>{
+      this.props.navigation.navigate('Profile')
+      // alert("save to history success")
+    })
+    .catch((error)=>{
+      alert('save to history error')
+    })
   }
 
   next = () => {
@@ -133,7 +160,25 @@ export default class ViroSample extends Component {
   }
 
   componentDidMount() {
+    this._getToken()
   }
+
+
+  _getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('Access-Token');
+      if (value !== null) {
+        this.setState({
+          ...this.state,
+          token : value,
+          startDate : new Date()
+        })
+      }
+    } catch (error) {
+      alert('Error Retrieving Access-Token')
+    }
+  }
+
 
   render() {
     return (

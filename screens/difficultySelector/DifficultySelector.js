@@ -34,19 +34,6 @@ class Profile extends React.Component {
   _goToProfile = () => {
     this.props.navigation.navigate('Profile')
   }
-  // _getToken = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('Access-Token');
-  //     if (value !== null) {
-  //       alert(value)
-  //     }
-  //   } catch (error) {
-  //     alert('Error Retrieving Access-Token')
-  //   }
-  // }
-  // componentDidMount = () => {
-  //   this._getToken()
-  // }
   render() {
     return (
       <TouchableOpacity onPress={this._goToProfile}>

@@ -20,6 +20,7 @@ import DifficultySelector from './screens/difficultySelector/DifficultySelector'
 import SketchSelector from './screens/sketchSelector/SketchSelector'
 
 import ProfilePage from './screens/profile/Profile'
+import GameOver from './screens/gameOver/GameOver'
 // Styles
 // import styles from './GlobalStyles'
 
@@ -60,7 +61,6 @@ const AppNavigator = createStackNavigator(
     SketchSelector: {
       screen: SketchSelector
     },
-
     // ? Drawing
     CoreAR: {
       screen: CoreAR,
@@ -70,6 +70,9 @@ const AppNavigator = createStackNavigator(
     },
     Profile : {
       screen : ProfilePage,
+    },
+    GameOver : {
+      screen : GameOver
     }
   },
   {

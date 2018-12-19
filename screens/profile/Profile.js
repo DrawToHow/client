@@ -15,7 +15,7 @@ import {
   Alert,
   Slider,
   DImen,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 import axios from 'axios'
@@ -86,12 +86,23 @@ export default class Profile extends Component {
     }
     
     render() {
+      let style=''
+      if(this.state.histories){
+        style={flex:1,alignItems:'stretch'}
+      }else{
+        style={flex:1,justifyContent:'center',alignItems:'center'}
+      }
+
       return (
-        <View>
+        <View style={style}>
         {this.state.histories ? (
-          <Text>{JSON.stringify(this.state.histories)}</Text>
+          this.state.histories.map(history => 
+          <View style={{margin : 5 , backgroundColor : 'white' , elevation : 3,padding : 3}}>
+            <Text style={{textAlign : 'center', color : 'black'}}>{history.createdAt.slice(0,10)} | TUTORIAL : {history.tutorialId} | Time : {(history.time / 1000 / 60).toFixed(2) } minutes | Score : -</Text>
+          </View>
+          )
         ):(
-          <Text>Masih Loading...</Text>
+            <ActivityIndicator size="large" color="red" />
         )}
         </View>
       )
