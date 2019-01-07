@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
   Image,
   ScrollView,
-  Alert
 } from 'react-native'
 import axios from 'axios'
 
@@ -30,7 +27,6 @@ class SignIn extends Component {
 
   static navigationOptions = {
     headerTitle: <Logo />,
-    // headerRight: <Logo />,
     headerStyle: {
       backgroundColor: '#ffffff',
       borderBottomWidth: 0,
@@ -67,9 +63,10 @@ class SignIn extends Component {
   _storeData = async (accessToken) => {
     try {
       await AsyncStorage.setItem('Access-Token',  accessToken);
+      
     } catch (error) {
-      // Error saving data
       alert('error saving to async storage')
+      this.props.navigation.navigate('SingIn')
     }
   }
 

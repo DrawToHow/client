@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { 
-  StyleSheet, 
   Text, 
   TextInput, 
   View, 
-  Button,
   Image,
   ScrollView,
-  Alert
 } from 'react-native'
-import firebase from '../../configs/firebaseConfig'
 
 import styles from '../../styles/GlobalStyles'
 
@@ -30,7 +26,6 @@ class Register extends Component {
 
   static navigationOptions = {
     headerTitle: <Logo />,
-    // headerRight: <Logo />,
     headerStyle: {
       backgroundColor: '#ffffff',
       borderBottomWidth: 0,
@@ -40,14 +35,13 @@ class Register extends Component {
   };
 
   state = {
-    name : 'hadi2',
-    email: 'hadi2@mail.com',
-    password: 'secret',
-    error: ''
+    name : '',
+    email: '',
+    password: '',
+    error : ''
   }
   
   RegisterHandler = () => {
-    // alert(JSON.stringify(this.state))
     const data = {
       name : this.state.name,
       email : this.state.email,
@@ -62,7 +56,7 @@ class Register extends Component {
       this.props.navigation.navigate('SignIn')
     })
     .catch((error)=>{
-      alert('register error')
+      alert(JSON.stringify(error.response.data.errors))
     })
   }
 

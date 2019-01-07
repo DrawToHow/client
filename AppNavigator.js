@@ -1,9 +1,5 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
 import { 
-  createBottomTabNavigator, 
   createStackNavigator, 
-  createDrawerNavigator 
 } from "react-navigation";
 
 // Screens
@@ -21,8 +17,6 @@ import SketchSelector from './screens/sketchSelector/SketchSelector'
 
 import ProfilePage from './screens/profile/Profile'
 import GameOver from './screens/gameOver/GameOver'
-// Styles
-// import styles from './GlobalStyles'
 
 const AppNavigator = createStackNavigator(
   {
@@ -40,7 +34,6 @@ const AppNavigator = createStackNavigator(
         
       })
     },
-    
     // ? User
     SignIn: {
       screen: SignIn,
@@ -64,9 +57,8 @@ const AppNavigator = createStackNavigator(
     // ? Drawing
     CoreAR: {
       screen: CoreAR,
-      navigationOptions: ({ navigation }) => ({
-        
-      })
+      // navigationOptions: ({ navigation }) => ({
+      // })
     },
     Profile : {
       screen : ProfilePage,
@@ -76,7 +68,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'SignIn'
+    initialRouteName: 'AnimationOpening'
   }
 );
 

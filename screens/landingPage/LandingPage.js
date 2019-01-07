@@ -2,27 +2,13 @@
 
 import React, { Component } from 'react';
 
-
 import {
-  StyleSheet,
-  Button,
   View,
-  TouchableHighlight,
-  TouchableOpacity,
   Image,
-  AppRegistry,
-  ActivityIndicator,
   Text,
-  Alert,
-  Slider
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
-
-// import ViewShot from 'react-native-view-shot'
-import ViewShot, { captureRef } from "react-native-view-shot";
-
-// import { Examples } from '@shoutem/ui';
 
 class Logo extends React.Component {
   render() {
@@ -37,21 +23,8 @@ class Logo extends React.Component {
 
 export default class LandingPage extends Component {
 
-  screenShot = () => {
-    captureRef(this._ref, {
-      format: "jpg",
-      quality: 0.8
-    })
-      .then(
-        uri => Alert.alert("Image saved to", JSON.stringify(uri)),
-        error => Alert.alert("Oops, snapshot failed", JSON.stringify(error))
-      );
-  }
-
-  
   static navigationOptions = {
     headerTitle: <Logo />,
-    // headerRight: <Logo />,
     headerStyle: {
       backgroundColor: '#ffffff',
       borderBottomWidth: 0,
@@ -59,9 +32,6 @@ export default class LandingPage extends Component {
       alignItems: 'center'
     }
   };
-
-  componentDidMount() {
-  }
 
   render() {
     return (
@@ -71,7 +41,6 @@ export default class LandingPage extends Component {
         <View style={styles.LandingPageMid}>
           <Text style={styles.LandingPageMain}
             onPress={() => this.props.navigation.navigate('SignIn')}
-            // onPress={() => this.screenShot}
           >
             Sign In
           </Text>

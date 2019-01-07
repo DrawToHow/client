@@ -6,23 +6,14 @@ import {
   Text, 
   View,
   Image,
-  Alert,
-  Easing
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
 
-import ViewShot from "react-native-view-shot";
-
-// You can then use your `FadeInView` in place of a `View` in your components:
 export default class App extends React.Component {
 
   state = {
     fadeAnim: new Animated.Value(0),
-  }
-
-  componentDidMount() {
-    Alert.alert('hehehhee')
   }
 
   render() {
@@ -62,7 +53,6 @@ export default class App extends React.Component {
             }}
             source={require('../../js/res/logo/gogh1-red-large.png')}
           />
-
           <Text style={styles.AnimationOpeningText}>
             Gogh, your personal sketch trainer.
           </Text>
@@ -71,61 +61,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-// const Styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff'
-//   },
-//   header: {
-//     flex: 1,
-//     backgroundColor: '#fff'
-//   },
-//   logo: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     justifyContent: 'center'
-//   },
-//   profile: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end'
-//   },
-//   level: {
-//     flex: 3,
-//     backgroundColor: '#F8F8F8',
-//     margin: 5,
-//     borderRadius: 15,
-//     borderColor: '#F8F8F8',
-//     // underlayColor: '#F8F8F8'
-//     // activeOpacity: 1
-//   },
-//   levelTextView: {
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end'
-//   },
-//   levelText: {
-//     color: 'crimson',
-//     fontSize: 15,
-//     margin: 10,
-//     fontFamily: 'Helvetica'
-//   },
-//   levelDescriptionView: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end'
-//   },
-//   levelDescriptionText: {
-//     // flex:1,
-//     color: 'grey',
-//     fontSize: 20,
-//     textAlign: 'right',
-//     fontFamily: 'Helvetica',
-//     includeFontPadding: true,
-//     marginRight: 10
-//   },
-//   image: {
-//     flexDirection: 'row',
-//     justifyContent: 'flex-start'
-//   }
-// })
