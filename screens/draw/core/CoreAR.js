@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  ActivityIndicator,
   Text,
   View,
   StyleSheet,
@@ -21,22 +19,11 @@ import {
 
 import axios from 'axios'
 
-import renderIf from '../../../js/helpers/renderIf';
-// var InitialARScene = require('../cat/CatAR');
 import CatAR from '../cat/CatAR'
 
 import styles from '../../../styles/GlobalStyles'
 
-class Logo extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../../../js/res/logo/gogh1-red-large.png')}
-        style={{ width: 60, height: 60, marginTop: 20 }}
-      />
-    );
-  }
-}
+import Logo from '../../../components/logo'
 
 class PreviousButton extends React.Component {
   render() {
@@ -60,11 +47,10 @@ class NextButton extends React.Component {
   }
 }
 
-export default class ViroSample extends Component {
+export default class CoreAR extends Component {
 
   constructor() {
     super();
-    // this._renderTrackingText = this._renderTrackingText.bind(this);
     this._onTrackingInit = this._onTrackingInit.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoadEnd = this._onLoadEnd.bind(this);
@@ -75,18 +61,10 @@ export default class ViroSample extends Component {
       isLoading: false,
       imageNumber: 1,
       sliderValue: 100,
-      modalVisible: false,
+      // modalVisible: false,
       startDate : '',
       token : ''
     }
-  }
-
-  // state = {
-  //   modalVisible: false
-  // }
-
-  setModalVisible = visible => {
-    this.setState({ modalVisible: visible });
   }
 
   static navigationOptions = ({ navigation }) => { 
@@ -104,7 +82,6 @@ export default class ViroSample extends Component {
       ...this.state,
       viroAppProps: { ...this.state.viroAppProps, imageNumber: this.state.viroAppProps.imageNumber - 1 }
     })
-    // alert(this.state.viroAppProps.imageNumber)
   }
 
   submit = () => {
@@ -163,7 +140,6 @@ export default class ViroSample extends Component {
     this._getToken()
   }
 
-
   _getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('Access-Token');
@@ -176,6 +152,7 @@ export default class ViroSample extends Component {
       }
     } catch (error) {
       alert('Error Retrieving Access-Token')
+      this.props.navigation.navigate('SignIn')
     }
   }
 
@@ -184,39 +161,10 @@ export default class ViroSample extends Component {
     return (
         <View 
         style={localStyles.outer} 
-        ref="scene"
-        ref={(c) => this._arScene = c}
+        // ref="scene"
+        // ref={(c) => this._arScene = c}
         >
-          {
-            this.state.modalVisible ?
-              <Modal
-                animationType="slide"
-                transparent={true}
-                style={styles.coreARModal}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
-                }}>
-                <View style={{ flex: 1, marginTop: 22, backgroundColor: 'rgba(26, 26, 26, 0.45)' }}>
-                  <View>
-                    <Text>Hello World!</Text>
-
-                    <TouchableHighlight
-                      onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}>
-                      <Text>Hide Modal</Text>
-                    </TouchableHighlight>
-                  </View>
-                </View>
-              </Modal>
-
-              :
-
-              null
-          }
           <ViroARSceneNavigator
-            
             style={localStyles.arView} 
             apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
             initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
@@ -265,6 +213,7 @@ export default class ViroSample extends Component {
 
             </View>
           </View>
+
         </View>
     );
   }
@@ -324,5 +273,3 @@ var localStyles = StyleSheet.create({
     margin : 5
   }
 });
-
-module.exports = ViroSample

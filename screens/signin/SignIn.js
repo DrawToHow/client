@@ -3,7 +3,8 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native'
 import axios from 'axios'
 
@@ -28,10 +29,12 @@ class SignIn extends Component {
   state = {
     email: '',
     password: '',
-    errorLogin: ''
+    errorLogin: '',
+    loading : false
   }
 
   SignInHandler = () => {
+    this._startLoading()
     const data = {
       email : this.state.email,
       password : this.state.password
@@ -42,10 +45,11 @@ class SignIn extends Component {
       data
     })
     .then(({data})=>{
+      this._stopLoading()
       this._storeData(data.accessToken)
-      this.props.navigation.navigate('DifficultySelector')
     })
     .catch((error)=>{
+      this._stopLoading()
       const errors = error.response.data.errors.login
       const errorMessage = errors.message
       this.setState({
@@ -55,51 +59,83 @@ class SignIn extends Component {
     })
   }
 
+  _startLoading = () => {
+    this.setState({
+      ...this.state,
+      loading : true
+    })
+  }
+
+  _stopLoading = () => {
+    this.setState({
+      ...this.state,
+      loading : false
+    })
+  }
+
   _storeData = async (accessToken) => {
     try {
       await AsyncStorage.setItem('Access-Token',  accessToken);
+      this.props.navigation.navigate('DifficultySelector')
     } catch (error) {
       alert('error saving to async storage')
     }
   }
 
   render() {
+    let containerStyle = ''
+    if(!this.state.loading){
+      containerStyle = {
+        flexGrow : 1
+      }
+    }else if(this.state.loading){
+      containerStyle = {
+        flexGrow : 1,
+        justifyContent : 'center',
+        alignItems : 'center'
+      }
+    }
+
     return (
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={containerStyle}
         keyboardShouldPersistTaps='handled'>
-        <View style={styles.registerView}>
-          {this.state.errorLogin ? <Text>{this.state.errorLogin}</Text> : null}
+        {this.state.loading ?  (
+          <ActivityIndicator size="large" color="red" />
+        ) : (
+          <View style={styles.registerView}>
+            {this.state.errorLogin ? <Text>{this.state.errorLogin}</Text> : null}
 
-          <TextInput
-            placeholder="Email"
-            autoCapitalize="none"
-            style={styles.RegisterForm}
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-          />
+            <TextInput
+              placeholder="Email"
+              autoCapitalize="none"
+              style={styles.RegisterForm}
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email}
+            />
 
-          <TextInput
-            secureTextEntry
-            placeholder="Password"
-            autoCapitalize="none"
-            style={styles.RegisterForm}
-            onChangeText={password => this.setState({ password })}
-            value={this.state.password}
-          />
+            <TextInput
+              secureTextEntry
+              placeholder="Password"
+              autoCapitalize="none"
+              style={styles.RegisterForm}
+              onChangeText={password => this.setState({ password })}
+              value={this.state.password}
+            />
 
-          <Text
-            style={styles.signInText}
-            onPress={this.SignInHandler}>
-            Sign In
+            <Text
+              style={styles.signInText}
+              onPress={this.SignInHandler}>
+              Sign In
+              </Text>
+
+            <Text
+              onPress={() => this.props.navigation.navigate('Register')}
+              style={styles.RegisterSecondary}>
+              No account yet? Register here.
             </Text>
-
-          <Text
-            onPress={() => this.props.navigation.navigate('Register')}
-            style={styles.RegisterSecondary}>
-            No account yet? Register here.
-          </Text>
-        </View>
+          </View>
+        )}
       </ScrollView>
     );
   }

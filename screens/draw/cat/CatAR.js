@@ -2,34 +2,31 @@
 
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  Button,
-  View,
-  TouchableHighlight,
-  Image,
-  AppRegistry,
-  ActivityIndicator,
-  Text,
-  Alert,
-  Slider
-} from 'react-native';
+// import {
+//   StyleSheet,
+//   Button,
+//   View,
+//   TouchableHighlight,
+//   Image,
+//   AppRegistry,
+//   ActivityIndicator,
+//   Text,
+//   Alert,
+// } from 'react-native';
 
 import {
   ViroARScene,
-  ViroText,
+  // ViroText,
   ViroConstants,
-  ViroBox,
-  ViroMaterials,
+  // ViroBox,
+  // ViroMaterials,
   ViroARTrackingTargets,
   ViroARImageMarker,
-  ViroARSceneNavigator,
+  // ViroARSceneNavigator,
   ViroImage,
-  ViroARPlaneSelector,
-  Viro3DObject,
+  // ViroARPlaneSelector,
+  // Viro3DObject,
 } from 'react-viro';
-
-import renderIf from '../../../js/helpers/renderIf';
 
 export default class CatAR extends Component {
 
@@ -49,11 +46,6 @@ export default class CatAR extends Component {
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
   }
-
-  componentDidMount() {
-  }
-
-  takePicture() { this.camera.capture().then((data) => console.log(data)).catch(err => console.error(err)); }
 
   render() {
     const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber,
@@ -130,11 +122,9 @@ export default class CatAR extends Component {
 
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        text: "Hello World!"
-      });
+      // Handle tracking
     } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
+      //Handle loss of tracking
     }
   }
 }
@@ -144,27 +134,5 @@ ViroARTrackingTargets.createTargets({
     source: require('../../../js/res/targetOne.jpg'),
     orientation: "Left",
     physicalWidth: 0.21 // paper width IRL
-  },
-});
-
-var styles = StyleSheet.create({
-  buttons: {
-    height: 80,
-    width: 150,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: '#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
-  helloWorldTextStyle: {
-    fontFamily: 'Arial',
-    fontSize: 30,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
   },
 });
