@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   View,
-  Image,
   ScrollView,
 } from 'react-native'
 import axios from 'axios'
@@ -12,16 +11,7 @@ import { AsyncStorage } from "react-native"
 
 import styles from '../../styles/GlobalStyles'
 
-class Logo extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../../js/res/logo/gogh1-red-large.png')}
-        style={{ width: 60, height: 60, marginTop: 20 }}
-      />
-    );
-  }
-}
+import Logo from '../../components/logo'
 
 class SignIn extends Component {
 

@@ -4,47 +4,13 @@ import React, { Component } from 'react';
 
 import {
   StyleSheet,
-  Button,
   View,
-  TouchableHighlight,
-  TouchableOpacity,
-  Image,
-  AppRegistry,
   ActivityIndicator,
   Text,
-  Alert,
-  Slider,
-  DImen,
   AsyncStorage,
 } from 'react-native';
 
 import axios from 'axios'
-
-// import Svg,{
-//     Circle,
-//     Ellipse,
-//     G,
-//     // Text,
-//     TSpan,
-//     TextPath,
-//     Path,
-//     Polygon,
-//     Polyline,
-//     Line,
-//     Rect,
-//     Use,
-//     // Image,
-//     Symbol,
-//     Defs,
-//     LinearGradient,
-//     RadialGradient,
-//     Stop,
-//     ClipPath,
-//     Pattern,
-//     Mask,
-// } from 'react-native-svg';
-
-// const { width, height } = Dimensions.get('window');
 
 export default class Profile extends Component {
     constructor(props) {

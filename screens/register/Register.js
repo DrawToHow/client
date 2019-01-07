@@ -3,24 +3,15 @@ import {
   Text, 
   TextInput, 
   View, 
-  Image,
   ScrollView,
+  ActivityIndicator
 } from 'react-native'
 
 import styles from '../../styles/GlobalStyles'
 
 import axios from 'axios'
 
-class Logo extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../../js/res/logo/gogh1-red-large.png')}
-        style={{ width: 60, height: 60, marginTop: 20 }}
-      />
-    );
-  }
-}
+import Logo from '../../components/logo'
 
 class Register extends Component {
 
@@ -41,11 +32,12 @@ class Register extends Component {
     error : '',
     errorName : '',
     errorEmail : '',
-    errorPassword : ''
+    errorPassword : '',
+    loading : false
   }
   
   RegisterHandler = () => {
-    this._clearErrors()
+    this._clearErrorsAndLoading()
     const data = {
       name : this.state.name,
       email : this.state.email,
@@ -57,9 +49,17 @@ class Register extends Component {
       data : data
     })
     .then((response)=>{
+      this.setState({
+        ...this.state,
+        loading : false
+      })
       this.props.navigation.navigate('SignIn')
     })
     .catch((error)=>{
+      this.setState({
+        ...this.state,
+        loading : false
+      })
       const errors = error.response.data.errors
       const keys = Object.keys(errors)
       keys.forEach(key=>{
@@ -83,66 +83,84 @@ class Register extends Component {
     })
   }
 
-  _clearErrors = () => {
+  _clearErrorsAndLoading = () => {
     this.setState({
       ...this.state,
       errorName : '',
       errorEmail : '',
-      errorPassword : ''
+      errorPassword : '',
+      loading : true
     })
   }
 
   render() {
+    let containerStyle = ''
+    if(!this.state.loading){
+      containerStyle = {
+        flexGrow : 1
+      }
+    }else if(this.state.loading){
+      containerStyle = {
+        flexGrow : 1,
+        justifyContent : 'center',
+        alignItems : 'center'
+      }
+    }
+
     return (
       <ScrollView   
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={containerStyle}
         keyboardShouldPersistTaps='handled'>
-        <View style={styles.registerView}>
+        {this.state.loading ? (
+          <ActivityIndicator size="large" color="red" />
+        ):(
+          <View style={styles.registerView}>
 
-            {this.state.errorName ? <Text>{this.state.errorName}</Text> : null}
-            <TextInput
-              placeholder="Name"
-              autoCapitalize="none"
-              style={styles.RegisterForm}
-              onChangeText={name => this.setState({ name })}
-              value={this.state.name}
-            />
+          {this.state.errorName ? <Text>{this.state.errorName}</Text> : null}
+          <TextInput
+            placeholder="Name"
+            autoCapitalize="none"
+            style={styles.RegisterForm}
+            onChangeText={name => this.setState({ name })}
+            value={this.state.name}
+          />
 
-            {this.state.errorEmail ? <Text>{this.state.errorEmail}</Text> : null}
-            <TextInput
-              placeholder="Email"
-              autoCapitalize="none"
-              style={styles.RegisterForm}
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
-            />
+          {this.state.errorEmail ? <Text>{this.state.errorEmail}</Text> : null}
+          <TextInput
+            placeholder="Email"
+            autoCapitalize="none"
+            style={styles.RegisterForm}
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+          />
 
-            {this.state.errorPassword ? <Text>{this.state.errorPassword}</Text> : null}
-            <TextInput
-              secureTextEntry
-              placeholder="Password"
-              autoCapitalize="none"
-              style={styles.RegisterForm}
-              onChangeText={password => this.setState({ password })}
-              value={this.state.password}
-            />
+          {this.state.errorPassword ? <Text>{this.state.errorPassword}</Text> : null}
+          <TextInput
+            secureTextEntry
+            placeholder="Password"
+            autoCapitalize="none"
+            style={styles.RegisterForm}
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+          />
 
-            <Text style={styles.RegisterSecondary}>
-              By registering, I agree to the Terms of Service and Privacy Policy
-            </Text>
+          <Text style={styles.RegisterSecondary}>
+            By registering, I agree to the Terms of Service and Privacy Policy
+          </Text>
 
-            <Text
-              style={styles.RegisterText}
-              onPress={this.RegisterHandler}>
-              Register
-            </Text>
+          <Text
+            style={styles.RegisterText}
+            onPress={this.RegisterHandler}>
+            Register
+          </Text>
 
-            <Text 
-              onPress={() => this.props.navigation.navigate('SignIn')}
-              style={styles.RegisterSecondary}>
-              Already have an account? Sign In
-            </Text>
-        </View>
+          <Text 
+            onPress={() => this.props.navigation.navigate('SignIn')}
+            style={styles.RegisterSecondary}>
+            Already have an account? Sign In
+          </Text>
+          </View>
+        )}
       </ScrollView>
     );
   }
