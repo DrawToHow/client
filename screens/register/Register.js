@@ -38,10 +38,14 @@ class Register extends Component {
     name : '',
     email: '',
     password: '',
-    error : ''
+    error : '',
+    errorName : '',
+    errorEmail : '',
+    errorPassword : ''
   }
   
   RegisterHandler = () => {
+    this._clearErrors()
     const data = {
       name : this.state.name,
       email : this.state.email,
@@ -56,7 +60,35 @@ class Register extends Component {
       this.props.navigation.navigate('SignIn')
     })
     .catch((error)=>{
-      alert(JSON.stringify(error.response.data.errors))
+      const errors = error.response.data.errors
+      const keys = Object.keys(errors)
+      keys.forEach(key=>{
+        if(key === 'email'){
+          this.setState({
+            ...this.state,
+            errorEmail : errors[key].message
+          })
+        }else if(key === 'password'){
+          this.setState({
+            ...this.state,
+            errorPassword : errors[key].message
+          })
+        }else if(key === 'name'){
+          this.setState({
+            ...this.state,
+            errorName : errors[key].message
+          })
+        }
+      })
+    })
+  }
+
+  _clearErrors = () => {
+    this.setState({
+      ...this.state,
+      errorName : '',
+      errorEmail : '',
+      errorPassword : ''
     })
   }
 
@@ -66,8 +98,8 @@ class Register extends Component {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps='handled'>
         <View style={styles.registerView}>
-          {this.state.error ? <Text>{this.state.error}</Text> : null}
 
+            {this.state.errorName ? <Text>{this.state.errorName}</Text> : null}
             <TextInput
               placeholder="Name"
               autoCapitalize="none"
@@ -76,6 +108,7 @@ class Register extends Component {
               value={this.state.name}
             />
 
+            {this.state.errorEmail ? <Text>{this.state.errorEmail}</Text> : null}
             <TextInput
               placeholder="Email"
               autoCapitalize="none"
@@ -84,6 +117,7 @@ class Register extends Component {
               value={this.state.email}
             />
 
+            {this.state.errorPassword ? <Text>{this.state.errorPassword}</Text> : null}
             <TextInput
               secureTextEntry
               placeholder="Password"
