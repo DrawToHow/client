@@ -3,7 +3,7 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
+  ScrollView
 } from 'react-native'
 import axios from 'axios'
 
@@ -26,9 +26,9 @@ class SignIn extends Component {
   };
 
   state = {
-    email: 'hadi@mail.com',
-    password: 'secret',
-    error: ''
+    email: '',
+    password: '',
+    errorLogin: ''
   }
 
   SignInHandler = () => {
@@ -46,17 +46,20 @@ class SignIn extends Component {
       this.props.navigation.navigate('DifficultySelector')
     })
     .catch((error)=>{
-      alert('sign in error')
+      const errors = error.response.data.errors.login
+      const errorMessage = errors.message
+      this.setState({
+        ...this.state,
+        errorLogin : errorMessage
+      })
     })
   }
 
   _storeData = async (accessToken) => {
     try {
       await AsyncStorage.setItem('Access-Token',  accessToken);
-      
     } catch (error) {
       alert('error saving to async storage')
-      this.props.navigation.navigate('SingIn')
     }
   }
 
@@ -66,7 +69,7 @@ class SignIn extends Component {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps='handled'>
         <View style={styles.registerView}>
-          {this.state.error ? <Text>{this.state.error}</Text> : null}
+          {this.state.errorLogin ? <Text>{this.state.errorLogin}</Text> : null}
 
           <TextInput
             placeholder="Email"

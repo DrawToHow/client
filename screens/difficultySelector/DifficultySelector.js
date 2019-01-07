@@ -3,48 +3,14 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
-  Button,
   View,
-  TouchableHighlight,
-  TouchableOpacity,
-  Image,
-  AppRegistry,
-  ActivityIndicator,
   Text,
-  Alert,
-  Slider,
-  AsyncStorage
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
 
-class Logo extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../../js/res/logo/gogh1-red-large.png')}
-        style={{ width: 60, height: 60, marginTop: 20 }}
-      />
-    );
-  }
-}
-
-class Profile extends React.Component {
-  _goToProfile = () => {
-    this.props.navigation.navigate('Profile')
-  }
-  render() {
-    return (
-      <TouchableOpacity onPress={this._goToProfile}>
-        <Image
-          source={require('../../js/res/logo/user-profile.png')}
-          style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
-        />
-      </TouchableOpacity>
-    );
-  }
-}
+import Logo from '../../components/logo'
+import Profile from '../../components/profile'
 
 export default class LandingPage extends Component {
   static navigationOptions = ({navigation}) => {

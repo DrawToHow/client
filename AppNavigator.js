@@ -68,7 +68,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'AnimationOpening'
+    initialRouteName: 'SignIn'
   }
 );
 
