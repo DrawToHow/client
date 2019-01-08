@@ -63,7 +63,8 @@ export default class CoreAR extends Component {
       sliderValue: 100,
       // modalVisible: false,
       startDate : '',
-      token : ''
+      token : '',
+      displayObject : true
     }
   }
 
@@ -148,7 +149,6 @@ export default class CoreAR extends Component {
           token : value,
           startDate : new Date()
         })
-
       }
     } catch (error) {
       alert('Error Retrieving Access-Token')
