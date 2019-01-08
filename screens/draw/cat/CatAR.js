@@ -33,14 +33,13 @@ export default class CatAR extends Component {
   constructor() {
     super();
 
-    // Set initial state here
     this.state = {
-      text: "Initializing AR...",
-      animal: 'cat',
-      type: 'realistic',
-      image: 1,
-      imageTrace: './res/cat/reailstic/1.png',
-      opacity: 1
+      // text: "Initializing AR...",
+      // animal: 'cat',
+      // type: 'realistic',
+      // image: 1,
+      // imageTrace: './res/cat/reailstic/1.png',
+      // opacity: 1,
     };
 
     // bind 'this' to functions
@@ -49,8 +48,15 @@ export default class CatAR extends Component {
 
   render() {
     const imageNumber = this.props.arSceneNavigator.viroAppProps.imageNumber,
-          sliderValue = this.props.arSceneNavigator.viroAppProps.sliderValue
-
+          sliderValue = this.props.arSceneNavigator.viroAppProps.sliderValue,
+          // step1 = this.props.arSceneNavigator.viroAppProps.tutorial.step1,
+          // step2 = this.props.arSceneNavigator.viroAppProps.tutorial.step2,
+          // step3 = this.props.arSceneNavigator.viroAppProps.tutorial.step3,
+          // step4 = this.props.arSceneNavigator.viroAppProps.tutorial.step4,
+          // step5 = this.props.arSceneNavigator.viroAppProps.tutorial.step5,
+          // step6 = this.props.arSceneNavigator.viroAppProps.tutorial.step6,
+          // step7 = this.props.arSceneNavigator.viroAppProps.tutorial.step7,
+          
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"targetOne"} >

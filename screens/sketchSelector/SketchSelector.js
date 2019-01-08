@@ -2,53 +2,30 @@
 
 import React, { Component } from 'react';
 
-
 import {
-  StyleSheet,
-  Button,
+  // StyleSheet,
+  // Button,
   View,
-  TouchableHighlight,
+  // TouchableHighlight,
   TouchableOpacity,
   Image,
-  AppRegistry,
-  ActivityIndicator,
+  // AppRegistry,
+  // ActivityIndicator,
   Text,
-  Alert,
-  Slider,
-  ImageBackground,
-  ScrollView
+  // Alert,
+  // Slider,
+  // ImageBackground,
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
 
 import styles from '../../styles/GlobalStyles'
 
-// import { Examples } from '@shoutem/ui';
+import Logo from '../../components/logo'
 
-class Logo extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../../js/res/logo/gogh1-red-large.png')}
-        style={{ width: 60, height: 60, marginTop: 20 }}
-      />
-    );
-  }
-}
+import Profile from '../../components/profile'
 
-class Profile extends React.Component {
-  _goToProfile = () => {
-    this.props.navigation.navigate('Profile')
-  }
-  render() {
-    return (
-      <TouchableOpacity onPress={this._goToProfile}>
-        <Image
-          source={require('../../js/res/logo/user-profile.png')}
-          style={{ width: 40, height: 40, marginTop: 20, marginRight: 20 }}
-        />
-      </TouchableOpacity>
-    );
-  }
-}
+import axios from 'axios'
 
 export default class SketchSelector extends Component {
 
@@ -65,34 +42,70 @@ export default class SketchSelector extends Component {
     }
   }
 
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      token : '',
+      tutorials : ''
+    }
+  }
+  
+  _getTokenAndTutorials = async () => {
+    try {
+      const value = await AsyncStorage.getItem('Access-Token');
+      if (value !== null) {
+        axios({
+          method : 'GET',
+          url : 'https://ke5fe3javb.execute-api.eu-central-1.amazonaws.com/dev/tutorials/',
+          headers : {
+            "Access-Token" : value
+          }
+        })
+        .then((response) => {
+          this.setState({
+            ...this.state,
+            tutorials : response.data
+          })
+        })
+        .catch((error)=>{
+          alert('error get')
+        })
+      }
+    } catch (error) {
+      alert('Error Retrieving Access-Token')
+      this.props.navigation.navigate('SignIn')
+    }
+  }
+
+  componentDidMount = () => {
+    this._getTokenAndTutorials()
+  }
+  
   render() {
     const { navigation } = this.props;
     const difficulty = navigation.getParam('difficulty');
 
     return (
       <View style={styles.LandingPageView}>
-        <View></View>
+        {/* <View></View> */}
 
         <View style={styles.sketchSelectorMid}>
           {
             difficulty === 'easy' ?
 
             <ScrollView>
-              {/* <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('CoreAR', {
-                  sketch: 'dog'
-                })}>
-                <Image
-                  style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/easy/Dog.png')}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity> */}
-
               <TouchableOpacity>
                 <Image
                   style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/easy/Cow.png')}
+                  source={{uri : 'https://s3-ap-southeast-1.amazonaws.com/goghapp/Cow.png'}}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  style={{ height: 250, width: 380 }}
+                  source={{uri : 'https://s3-ap-southeast-1.amazonaws.com/goghapp/dog.png'}}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -103,32 +116,22 @@ export default class SketchSelector extends Component {
             difficulty === 'normal' ?
 
             <ScrollView>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('CoreAR', {
-                  sketch: 'cat'
-                })}>
-                <Image
-                  style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/normal/Cat.png')}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <Image
-                  style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/normal/Horse.png')}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <Image
-                  style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/normal/Rat.png')}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
+              {this.state.tutorials ? (
+                this.state.tutorials.map(data => 
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('CoreAR', {
+                      sketch: data._id
+                    })}>
+                    <Image
+                      style={{ height: 250, width: 380 }}
+                      source={{uri : data.thumbnail}}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                )
+              ) : (
+                <Text>Please wait...</Text>
+              )}
             </ScrollView>
 
             :
@@ -136,13 +139,10 @@ export default class SketchSelector extends Component {
             difficulty === 'hard' ?
 
             <ScrollView>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('CoreAR', {
-                  sketch: 'dragon'
-                })}>
+              <TouchableOpacity>
                 <Image
                   style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/hard/Dragon.png')}
+                  source={{uri : 'https://s3-ap-southeast-1.amazonaws.com/goghapp/Dragon.png'}}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -150,22 +150,20 @@ export default class SketchSelector extends Component {
               <TouchableOpacity>
                 <Image
                   style={{ height: 250, width: 380 }}
-                  source={require('../../js/res/sketchSelector/hard/Eyes.png')}
+                  source={{uri : 'https://s3-ap-southeast-1.amazonaws.com/goghapp/Eyes.png'}}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
             </ScrollView>
-
             :
-
             null
           }
-
 
         </View>
 
         <View style={styles.LandingPageBottom}>
         </View>
+
       </View>
     );
   }

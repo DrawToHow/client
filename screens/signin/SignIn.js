@@ -4,11 +4,10 @@ import {
   TextInput,
   View,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  AsyncStorage
 } from 'react-native'
 import axios from 'axios'
-
-import { AsyncStorage } from "react-native"
 
 import styles from '../../styles/GlobalStyles'
 
@@ -27,8 +26,8 @@ class SignIn extends Component {
   };
 
   state = {
-    email: '',
-    password: '',
+    email: 'hadi@mail.com',
+    password: 'secret',
     errorLogin: '',
     loading : false
   }

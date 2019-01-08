@@ -5,9 +5,9 @@ import {
   StyleSheet,
   TouchableHighlight,
   Image,
-  Alert,
+  // Alert,
   Slider,
-  Modal,
+  // Modal,
   AsyncStorage
 } from 'react-native';
 
@@ -21,7 +21,7 @@ import axios from 'axios'
 
 import CatAR from '../cat/CatAR'
 
-import styles from '../../../styles/GlobalStyles'
+// import styles from '../../../styles/GlobalStyles'
 
 import Logo from '../../../components/logo'
 
@@ -56,7 +56,7 @@ export default class CoreAR extends Component {
     this._onLoadEnd = this._onLoadEnd.bind(this);
 
     this.state = {
-      viroAppProps: { sliderValue: 100, imageNumber: 1, displayObject: false, yOffset: 0, _onLoadEnd: this._onLoadEnd, _onLoadStart: this._onLoadStart, _onTrackingInit: this._onTrackingInit },
+      viroAppProps: { tutorial : '', sliderValue: 100, imageNumber: 1, displayObject: false, yOffset: 0, _onLoadEnd: this._onLoadEnd, _onLoadStart: this._onLoadStart, _onTrackingInit: this._onTrackingInit },
       trackingInitialized: false,
       isLoading: false,
       imageNumber: 1,
@@ -114,7 +114,6 @@ export default class CoreAR extends Component {
     })
     .then((response)=>{
       this.props.navigation.navigate('Profile')
-      // alert("save to history success")
     })
     .catch((error)=>{
       alert('save to history error')
@@ -149,6 +148,7 @@ export default class CoreAR extends Component {
           token : value,
           startDate : new Date()
         })
+
       }
     } catch (error) {
       alert('Error Retrieving Access-Token')
@@ -156,6 +156,28 @@ export default class CoreAR extends Component {
     }
   }
 
+  _fetchTutorial = () => {
+    const sketchId = navigation.getParam('sketch');
+    axios({
+      method : 'GET',
+      url : `https://ke5fe3javb.execute-api.eu-central-1.amazonaws.com/dev/tutorials/${sketchId}`,
+      headers : {
+        "Access-Token" : this.state.token
+      }
+    })
+    .then(({data})=>{
+      this.setState({
+        ...this.state,
+        viroAppProps : {
+          ...this.state.viroAppProps,
+          tutorial : data
+        }
+      })
+    })
+    .catch((error)=>{
+      alert('failed to fetch tutorial')
+    })
+  }
 
   render() {
     return (
@@ -169,7 +191,6 @@ export default class CoreAR extends Component {
             apiKey="836B1D24-5AEB-425C-AC0E-B5CCE5CC1D32"
             initialScene={{ scene: CatAR, passProps: { displayObject: this.state.displayObject } }}
             viroAppProps={this.state.viroAppProps}
-            
           />
           <View style={{position: 'absolute', left: 0, right: 0, bottom: 50 }}>
             <View style={{
